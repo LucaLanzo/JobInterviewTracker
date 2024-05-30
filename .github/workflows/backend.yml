@@ -23,16 +23,16 @@ jobs:
         run: cd Backend
 
       - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
+        run: chmod +x Backend/gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: Backend/./gradlew build
 
       - name: Run tests
-        run: ./gradlew test
+        run: Backend/./gradlew test
 
       - name: Package the application
-        run: ./gradlew bootJar
+        run: Backend/./gradlew bootJar
 
       - name: Upload to GitHub Packages
         uses: actions/upload-artifact@v2
