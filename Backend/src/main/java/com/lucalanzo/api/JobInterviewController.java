@@ -1,6 +1,6 @@
 package com.lucalanzo.api;
 
-import com.lucalanzo.data.resource.JobInterview;
+import com.lucalanzo.resource.JobInterview;
 import com.lucalanzo.service.JobInterviewService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

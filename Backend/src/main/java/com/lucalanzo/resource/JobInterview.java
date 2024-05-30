@@ -1,18 +1,17 @@
-package com.lucalanzo.data.resource;
+package com.lucalanzo.resource;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.sql.Date;
 
-@Entity
-@Document(collection="jobinterviews")
+
 @Data
 public class JobInterview {
     @Id
@@ -30,5 +29,6 @@ public class JobInterview {
     private Date dateApplied;
 
     @NotEmpty
+    @Field(targetType = FieldType.INT32)
     private ApplicationStatus status = ApplicationStatus.APPLIED;
 }

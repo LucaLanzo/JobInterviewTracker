@@ -1,7 +1,7 @@
 package com.lucalanzo.service;
 
-import com.lucalanzo.data.repository.JobInterviewRepository;
-import com.lucalanzo.data.resource.JobInterview;
+import com.lucalanzo.repository.JobInterviewRepository;
+import com.lucalanzo.resource.JobInterview;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
