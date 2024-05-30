@@ -37,18 +37,11 @@ jobs:
         run: ./gradlew bootJar
 
       - name: Upload to GitHub Packages
+        working-directory: ./Backend
         uses: actions/upload-artifact@v2
         with:
           name: job-interview-tracker-backend
-          path: Backend/build/libs/*.jar
-
-      - name: Deploy to Vercel
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          vercel --prod --token $VERCEL_TOKEN
+          path: build/libs/*.jar
 
 
   deploy:
