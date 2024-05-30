@@ -37,11 +37,10 @@ jobs:
         run: ./gradlew bootJar
 
       - name: Upload to GitHub Packages
-        working-directory: ./Backend
         uses: actions/upload-artifact@v2
         with:
           name: job-interview-tracker-backend
-          path: build/libs/*.jar
+          path: Backend/build/libs/*.jar
 
 
   deploy:
