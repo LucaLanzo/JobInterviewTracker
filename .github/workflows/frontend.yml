@@ -19,16 +19,16 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Change to Frontend Directory
-        run: cd Frontend
-
       - name: Install dependencies
+        working-directory: ./Frontend
         run: npm install
 
       - name: Build Angular app
+        working-directory: ./Frontend
         run: npm run build --prod
 
       - name: Deploy to Vercel
+        working-directory: ./Frontend
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
