@@ -60,7 +60,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: spring-boot-app
+          name: job-interview-tracker-backend
 
       - name: Login to Heroku
         env:
