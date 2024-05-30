@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
   mongodb:
-    image: mongo
-    container_name: job-interview-tracker-local-database
+    image: mongo:latest
+    container_name: mongodb
     ports:
       - "27017:27017"
-    environment:
-      - MONGO_INITDB_DATABASE=job-interview-tracker-local-database
