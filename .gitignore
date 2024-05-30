@@ -22,4 +22,6 @@ gradle-app.setting
 .classpath
 
 Backend.iml
+
+# Backend
 **/.env
