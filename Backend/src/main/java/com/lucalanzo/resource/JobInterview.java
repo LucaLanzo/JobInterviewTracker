@@ -1,7 +1,6 @@
 package com.lucalanzo.resource;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
@@ -25,10 +24,8 @@ public class JobInterview {
     @NotEmpty
     private String position;
 
-    @NotNull
-    private Date dateApplied;
+    private Date dateApplied = new Date(new java.util.Date().getTime());;
 
-    @NotEmpty
     @Field(targetType = FieldType.INT32)
     private ApplicationStatus status = ApplicationStatus.APPLIED;
 }
