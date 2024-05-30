@@ -20,19 +20,20 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Change to Backend Directory
-        run: cd Backend
-
       - name: Grant execute permission for gradlew
+        working-directory: ./Backend
         run: chmod +x gradlew
 
       - name: Build with Gradle
+        working-directory: ./Backend
         run: ./gradlew build
 
       - name: Run tests
+        working-directory: ./Backend
         run: ./gradlew test
 
       - name: Package the application
+        working-directory: ./Backend
         run: ./gradlew bootJar
 
       - name: Upload to GitHub Packages
