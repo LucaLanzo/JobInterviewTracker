@@ -1,9 +1,6 @@
 name: Frontend build and deploy to Vercel
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -20,15 +17,15 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        working-directory: ./Frontend
+        working-directory: ./Frontend/job-interiew-tracker-frontend
         run: npm install
 
       - name: Build Angular app
-        working-directory: ./Frontend
+        working-directory: ./Frontend/job-interiew-tracker-frontend
         run: npm run build --prod
 
       - name: Deploy to Vercel
-        working-directory: ./Frontend
+        working-directory: ./Frontend/job-interiew-tracker-frontend
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
