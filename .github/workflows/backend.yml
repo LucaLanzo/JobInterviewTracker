@@ -44,22 +44,26 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: job-interview-tracker-backend
-          path: build/libs/*jar
+          path: build/libs/*.jar
 
-      - name: Publish to GitHub Packages
-        working-directory: ./backend
-        run: ./gradlew publish
-        env:
-          USERNAME: ${{ github.actor }}
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          name: job-interview-tracker-backend
+          path: .
+    
+      - name: Install Heroku CLI
+        run: curl https://cli-assets.heroku.com/install.sh | sh
+
+      - name: Deploy to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+        run: |
+          JAR_FILE=$(ls *.jar)
+          heroku deploy:jar $JAR_FILE --app $HEROKU_APP_NAME
