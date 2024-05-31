@@ -41,13 +41,14 @@ jobs:
         run: ./gradlew bootJar
 
       - name: List files in build/libs for debugging
+        working-directory: ./backend
         run: ls -la build/libs
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: job-interview-tracker-backend
-          path: build/libs/*.jar
+          path: ./backend/build/libs/*.jar
 
           
   deploy:
