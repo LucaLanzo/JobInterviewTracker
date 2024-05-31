@@ -1,7 +1,9 @@
 name: Backend build, test and deploy to Heroku
 
 on:
-  release:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 jobs:

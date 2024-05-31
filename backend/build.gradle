@@ -56,10 +56,17 @@ publishing {
     }
     publications {
         mavenJava(MavenPublication) {
-            groupId 'com.lucalanzo'
-            artifactId 'job-interview-tracker-backend'
-            version getVersion()
             from(components.java)
+
+            artifactId 'job-interview-tracker-backend'
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
         }
     }
 }
@@ -74,8 +81,8 @@ static def getVersion() {
     }
 
     if (gitDescribeOutput) {
-        return gitDescribeOutput
+        return "v." + gitDescribeOutput
     } else {
-        return "0.0.1" // fallback version
+        return "v.0.1" // fallback version
     }
 }
