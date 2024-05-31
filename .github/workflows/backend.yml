@@ -40,15 +40,11 @@ jobs:
         working-directory: ./backend
         run: ./gradlew bootJar
 
-      - name: List files in build/libs for debugging
-        working-directory: ./backend
-        run: ls -la build/libs
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: job-interview-tracker-backend
-          path: ./backend/build/libs/*.jar
+          path: ./backend/build/libs/*[!plain].jar
 
           
   deploy:
@@ -60,14 +56,25 @@ jobs:
         with:
           name: job-interview-tracker-backend
           path: .
+
+      - name: Create Dockerfile
+        run: |
+          echo "FROM openjdk:17-jdk-alpine" >> Dockerfile
+          echo "WORKDIR /app" >> Dockerfile
+          echo "COPY build/libs/*.jar app.jar" >> Dockerfile
+          echo "CMD java -jar app.jar" >> Dockerfile
     
+      - name: Build Docker image
+        run: docker build -t job-interview-tracker-backend-image .
+
       - name: Install Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
-      - name: Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
-        run: |
-          JAR_FILE=$(ls *.jar)
-          heroku deploy:jar $JAR_FILE --app $HEROKU_APP_NAME
+      - name: Log in to Heroku Container Registry
+        run: heroku container:login
+
+      - name: Push Docker image to Heroku Container Registry
+        run: heroku container:push web -a ${{ secrets.HEROKU_APP_NAME }}
+
+      - name: Release Docker image on Heroku
+        run: heroku container:release web -a ${{ secrets.HEROKU_APP_NAME }}
