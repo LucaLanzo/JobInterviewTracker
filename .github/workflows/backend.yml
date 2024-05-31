@@ -40,6 +40,12 @@ jobs:
         working-directory: ./backend
         run: ./gradlew bootJar
 
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: job-interview-tracker-backend
+          path: build/libs/*jar
+
       - name: Publish to GitHub Packages
         working-directory: ./backend
         run: ./gradlew publish
@@ -50,39 +56,10 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Download artifact
-        uses: actions/download-artifact@v2
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.13.15 # This is the action
         with:
-          name: job-interview-tracker-backend
-
-      - name: Login to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          echo "machine api.heroku.com" > ~/.netrc
-          echo "  login ${{ secrets.HEROKU_EMAIL }}" >> ~/.netrc
-          echo "  password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
-          echo "machine git.heroku.com" >> ~/.netrc
-          echo "  login ${{ secrets.HEROKU_EMAIL }}" >> ~/.netrc
-          echo "  password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
-
-      - name: Create Heroku app (if not exists)
-        run: |
-          if ! heroku apps:info -a ${{ secrets.HEROKU_APP_NAME }}; then
-            heroku apps:create ${{ secrets.HEROKU_APP_NAME }}
-          fi
-
-      - name: Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          git init
-          git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-          git add .
-          git commit -am "Deploying to Heroku"
-          git push heroku main --force
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
