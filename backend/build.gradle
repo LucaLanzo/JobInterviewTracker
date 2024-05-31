@@ -75,10 +75,12 @@ static def getVersion() {
     def gitDescribeOutput = ""
     if (OperatingSystem.current().isWindows()) {
         gitDescribeOutput = 'git describe --tags --abbrev=0'.execute().text.trim()
-        print(gitDescribeOutput)
+
     } else {
         gitDescribeOutput = ['git', 'describe', '--tags', '--abbrev=0'].execute().text.trim()
     }
+
+    println(gitDescribeOutput)
 
     if (gitDescribeOutput) {
         return gitDescribeOutput
