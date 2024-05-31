@@ -50,34 +50,12 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: job-interview-tracker-backend
-          path: .
-
-      - name: Create Dockerfile
-        run: |
-          echo "FROM openjdk:17-jdk-alpine" >> Dockerfile
-          echo "WORKDIR /app" >> Dockerfile
-          echo "COPY *.jar app.jar" >> Dockerfile
-          echo "CMD java -jar app.jar" >> Dockerfile
     
-      - name: Build Docker image
-        run: docker build -t job-interview-tracker-backend-image .
-
-      - name: Install Heroku CLI
-        run: curl https://cli-assets.heroku.com/install.sh | sh
-
-      - name: Log in to Heroku CLI
-        run: heroku auth:login
-
-      - name: Log in to Heroku Container Registry
-        run: heroku container:login
-
-      - name: Push Docker image to Heroku Container Registry
-        run: heroku container:push web -a ${{ secrets.HEROKU_APP_NAME }}
-
-      - name: Release Docker image on Heroku
-        run: heroku container:release web -a ${{ secrets.HEROKU_APP_NAME }}
+    name: Deploy to Heroku
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_app_name: ${{secrets.HEROKU_APP}}
