@@ -36,11 +36,12 @@ jobs:
         working-directory: ./Backend
         run: ./gradlew bootJar
 
-      - name: Upload to GitHub Packages
-        uses: actions/upload-artifact@v2
-        with:
-          name: job-interview-tracker-backend
-          path: Backend/build/libs/*.jar
+      - name: Publish to GitHub Packages
+        working-directory: ./Backend
+        run: ./gradlew publish
+        env:
+          USERNAME: ${{ secrets.GITHUB_ACTOR }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
   deploy:
