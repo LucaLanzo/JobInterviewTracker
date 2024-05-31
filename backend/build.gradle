@@ -10,7 +10,6 @@ plugins {
 group = 'com.lucalanzo'
 version = getVersion()
 
-
 java {
     sourceCompatibility = '17'
 }
@@ -57,24 +56,19 @@ publishing {
     }
     publications {
         mavenJava(MavenPublication) {
+            groupId 'com.lucalanzo'
+            artifactId 'job-interview-tracker-backend'
+            version getVersion()
             from(components.java)
-
-            versionMapping {
-                usage('java-api') {
-                    fromResolutionOf('runtimeClasspath')
-                }
-                usage('java-runtime') {
-                    fromResolutionResult()
-                }
-            }
         }
     }
 }
 
-def getVersion() {
+static def getVersion() {
     def gitDescribeOutput = ""
     if (OperatingSystem.current().isWindows()) {
         gitDescribeOutput = 'git describe --tags --abbrev=0'.execute().text.trim()
+        print(gitDescribeOutput)
     } else {
         gitDescribeOutput = ['git', 'describe', '--tags', '--abbrev=0'].execute().text.trim()
     }
