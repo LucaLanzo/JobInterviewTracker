@@ -21,23 +21,23 @@ jobs:
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
-        working-directory: ./Backend
+        working-directory: ./backend
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        working-directory: ./Backend
+        working-directory: ./backend
         run: ./gradlew build
 
       - name: Run tests
-        working-directory: ./Backend
+        working-directory: ./backend
         run: ./gradlew test
 
       - name: Package the application
-        working-directory: ./Backend
+        working-directory: ./backend
         run: ./gradlew bootJar
 
       - name: Publish to GitHub Packages
-        working-directory: ./Backend
+        working-directory: ./backend
         run: ./gradlew publish
         env:
           USERNAME: ${{ secrets.GITHUB_ACTOR }}

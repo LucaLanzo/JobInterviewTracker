@@ -6,7 +6,8 @@ plugins {
 }
 
 group = 'com.lucalanzo'
-version = '0.0.1-SNAPSHOT'
+version = getVersion()
+
 
 java {
     sourceCompatibility = '17'
@@ -65,5 +66,20 @@ publishing {
                 }
             }
         }
+    }
+}
+
+def getVersion() {
+    def gitDescribeOutput = ""
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        gitDescribeOutput = 'git describe --tags --abbrev=0'.execute().text.trim()
+    } else {
+        gitDescribeOutput = ['git', 'describe', '--tags', '--abbrev=0'].execute().text.trim()
+    }
+
+    if (gitDescribeOutput) {
+        return gitDescribeOutput
+    } else {
+        return "0.0.1" // fallback version
     }
 }
