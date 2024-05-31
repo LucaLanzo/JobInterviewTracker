@@ -81,7 +81,7 @@ static def getVersion() {
     }
 
     if (gitDescribeOutput) {
-        return "v." + gitDescribeOutput
+        return gitDescribeOutput
     } else {
         return "v.0.1" // fallback version
     }
