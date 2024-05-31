@@ -1,0 +1,48 @@
+name: Publish backend release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+  
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        working-directory: ./backend
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        working-directory: ./backend
+        run: ./gradlew build
+
+      - name: Run tests
+        working-directory: ./backend
+        run: ./gradlew test
+
+      - name: Package the application
+        working-directory: ./backend
+        run: ./gradlew bootJar
+
+      - name: Publish to GitHub Packages
+        working-directory: ./backend
+        run: ./gradlew publish
+        env:
+          USERNAME: ${{ github.actor }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
