@@ -40,6 +40,9 @@ jobs:
         working-directory: ./backend
         run: ./gradlew bootJar
 
+      - name: List files in build/libs for debugging
+        run: ls -la build/libs
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
