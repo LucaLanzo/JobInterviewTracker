@@ -58,4 +58,4 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           heroku_app_name: ${{secrets.HEROKU_APP}}
           appdir: backend
-          buildpacks: 'https://github.com/heroku/heroku-buildpack-gradle.git'
+          # buildpacks: 'https://github.com/heroku/heroku-buildpack-gradle.git'
