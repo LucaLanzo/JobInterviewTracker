@@ -59,4 +59,4 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_APP}}
           appdir: "backend"
           branch: "main"
-          buildpacks: "https://github.com/heroku/heroku-buildpack-java.git"
+          buildpack: "https://github.com/heroku/heroku-buildpack-java.git"
