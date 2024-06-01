@@ -1,4 +1,4 @@
-name: Frontend build and deploy to Vercel
+name: Frontend - Build & Deploy to Vercel
 
 on:
   push:
