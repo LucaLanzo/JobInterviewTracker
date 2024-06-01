@@ -1,4 +1,4 @@
-name: Backend - Build & Deploy
+name: Backend - Build & Deploy to Heroku
 
 on:
   push:
