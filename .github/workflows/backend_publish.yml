@@ -1,4 +1,4 @@
-name: Publish backend release
+name: Backend - Build & Publish to GitHub Packages
 
 on:
   push:
