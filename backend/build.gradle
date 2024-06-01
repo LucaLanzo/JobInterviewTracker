@@ -43,6 +43,19 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.lucalanzo.JobInterviewTracker'
+        )
+    }
+}
+
+bootJar {
+    mainClassName = 'com.lucalanzo.JobInterviewTracker'
+}
+
 publishing {
     repositories {
         maven {
